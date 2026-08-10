@@ -10,8 +10,14 @@ public class ScopedValueDemo {
 
     void main(String[] args) {
         // Step 2: bind a value for a scope
-        where(REQUEST_ID, "REQ-42").run(() -> handleRequest());
-        where(REQUEST_ID, "REQ-43").run(() -> handleRequest());
+        where(REQUEST_ID, "REQ-42").run(
+            () -> handleRequest()
+        );
+        where(REQUEST_ID, "REQ-43").run(
+            () -> handleRequest()
+        );
+        where(REQUEST_ID, "REQ-44").run(
+            () -> handleRequest());
     }
 
     static void handleRequest() {
@@ -29,4 +35,3 @@ public class ScopedValueDemo {
         System.out.println("[" + REQUEST_ID.orElse("no-id") + "] " + msg);
     }
 }
-

@@ -1,28 +1,25 @@
 package com.linkedin.datasharingscopedvalue.challenge;
 
+import static java.lang.ScopedValue.where;
+
+
 public class OrderService {
 
     // OLD: Using ThreadLocal
-    private static final ThreadLocal<String> CURRENT_USER = new ThreadLocal<>();
+    private static final ScopedValue<String> CURRENT_USER = ScopedValue.newInstance();
 
     public static void main(String[] args) {
         // Simulate processing two orders
-        processOrder("Ouidad", "ORD-001", 99.99);
-        processOrder("Stephan", "ORD-002", 149.99);
+        where(CURRENT_USER, "Ouidad").run(() -> processOrder("Ouidad", "ORD-001", 99.99));
+        where(CURRENT_USER, "Stephan").run(() -> processOrder("Stephan", "ORD-002", 149.99));
     }
 
     static void processOrder(String username, String orderId, double amount) {
         // Set the user context
-        CURRENT_USER.set(username);
-
-        try {
             validateOrder(orderId, amount);
             saveOrder(orderId, amount);
             sendConfirmation(orderId);
-        } finally {
-            // Must remember to clean up!
-            CURRENT_USER.remove();
-        }
+        
     }
 
     static void validateOrder(String orderId, double amount) {
