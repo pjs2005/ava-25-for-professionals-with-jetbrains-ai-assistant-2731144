@@ -10,6 +10,7 @@ public class BatchingWithGatherer {
         // TODO: Replace the loop with a stream pipeline using Gatherers.windowFixed(3)
         numbers.stream()
                 // Your code here
+                .gather(Gatherers.windowFixed(3))
                 .forEach(System.out::println);
     }
 }

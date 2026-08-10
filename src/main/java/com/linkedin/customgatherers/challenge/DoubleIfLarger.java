@@ -1,5 +1,6 @@
 package com.linkedin.customgatherers.challenge;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Gatherer;
 import java.util.stream.Stream;
 
@@ -11,6 +12,8 @@ public class DoubleIfLarger {
             //       and what that previous value was
         }
 
+        AtomicInteger previous = new AtomicInteger(Integer.MAX_VALUE);
+
         return Gatherer.ofSequential(
                 State::new,
                 Gatherer.Integrator.ofGreedy((state, elem, downstream) -> {
@@ -19,6 +22,18 @@ public class DoubleIfLarger {
                     // 2. If elem > previous, emit elem * 2
                     // 3. Otherwise, emit elem as-is
                     // 4. Update state to remember this element
+
+                    if(elem > previous.get()) {
+                        downstream.push(elem * 2);
+                    } else {
+                        downstream.push(elem);
+                    }
+
+                    previous.set(elem);
+
+
+
+
 
                     return true; // continue processing
                 })
