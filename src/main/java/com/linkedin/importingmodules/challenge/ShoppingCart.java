@@ -1,19 +1,6 @@
 package com.linkedin.importingmodules.challenge;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
-import java.text.NumberFormat;
-import java.util.Locale;
+import module java.base;
 
 public class ShoppingCart {
 
